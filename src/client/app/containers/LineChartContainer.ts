@@ -78,9 +78,12 @@ function mapStateToProps(state: State) {
 	// both. This would mean future changes would automatically happen to both.
 	// Add all valid data from existing groups to the line plot
 	for (const groupID of state.graph.selectedGroups) {
+		// ABCDE The error is in this line of code below
 		const byGroupID = state.readings.line.byGroupID[groupID];
 		if (byGroupID !== undefined) {
+			debugger;
 			const readingsData = byGroupID[timeInterval.toString()];
+
 			if (readingsData !== undefined && !readingsData.isFetching) {
 				const label = state.groups.byGroupID[groupID].name;
 				const colorID = groupID;
@@ -101,7 +104,9 @@ function mapStateToProps(state: State) {
 					yData.push(reading.reading);
 					hoverText.push(`<b> ${timeReading.format('ddd, ll LTS'	)} </b> <br> ${label}: ${reading.reading.toPrecision(6)} kW`);
 				});
-
+				var output = label + " data:";
+				console.log(output);
+				console.log(yData);
 				// This variable contains all the elements (x and y values, line type, etc.) assigned to the data parameter of the Plotly object
 				datasets.push({
 					name: label,
